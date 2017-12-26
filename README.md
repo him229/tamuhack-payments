@@ -1,5 +1,16 @@
-# Stripe on Heroku
+# TAMUhack Payments
 
-My Stripe payment system on Heroku.
+Accept payment from vendors/sponsors through Stripe.
 
-<https://lepture.herokuapp.com>
+## Deploying
+
+Required config variables on Heroku:
+
+```
+SECRET_KEY = "A randomly generated secret key for flask session."
+STRIPE_SECRET_KEY = "A secret API key provided by Stripe."
+STRIPE_PUB_KEY = "A public API key provided by Stripe."
+```
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+

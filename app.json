@@ -1,0 +1,22 @@
+{
+    "name": "TAMUhack Payments",
+    "description": "This app accepts payments using Stripe.",
+    "keywords": [
+      "payments",
+      "tamuhack",
+      "stripe"
+    ],
+    "repository": "https://github.com/jane-doe/small-sharp-tool",
+    "env": {
+      "SECRET_KEY": {
+        "description": "A randomly generated secret key for flask session.",
+        "generator": "secret"
+      },
+      "STRIPE_SECRET_KEY": {
+        "description": "A secret API key provided by Stripe."
+      },
+      "STRIPE_PUB_KEY": {
+        "description": "A public API key by Stripe."
+      }
+    }
+}
