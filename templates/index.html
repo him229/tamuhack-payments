@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>TAMUhack | Payments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <style>
+    html,
+    body {
+      margin: 0;
+      font: normal 400 18px/1.75 "Helvetica Nenu", Hevetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      padding: 16px;
+    }
+
+    body * {
+      box-sizing: border-box;
+    }
+
+    strong {
+      color: #42b983;
+    }
+
+    h1.heading {
+      margin: 0 0 20px;
+      font-size: 60px;
+      color: #404040;
+      text-align: center;
+      line-height: 1;
+    }
+
+    p.heading {
+      font: 28px/1.4 Georgia, "Times New Roman", Palatino, serif;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: 60px;
+    }
+
+    .form-field {
+      margin: 20px 0;
+    }
+
+    .form-field label {
+      display: block;
+      color: #444;
+    }
+
+    .form-field input {
+      display: block;
+      padding: 5px;
+      width: 100%;
+      font: 28px/1.4 Georgia, "Times New Roman", Palatino, serif;
+      border: 1px solid #ddd;
+    }
+
+    .form-field button {
+      display: inline-block;
+      background-color: #42b983;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      color: white;
+      padding: 6px 20px;
+      font: 600 normal 18px/32px "Helvetica Nenu", Hevetica, Arial, sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      outline: none;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .stripe-form {
+      text-align: center;
+      padding: 30px 0;
+    }
+
+    @media (max-width: 640px) {
+      h1.heading {
+        font-size: 32px;
+      }
+      p.heading {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="heading">TAMUhack</h1>
+    {% if amount %}
+    <p class="heading">You (<strong>{{rep_name}}</strong>) are about to pay USD 
+      <strong>{{amount}}</strong> on behalf of 
+      <strong>{{company_name}}</strong>.</p>
+    <!-- <form class="stripe-form" action="/charge" method="post">
+      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="{{key}}"
+            data-description="{{reason}}"
+            data-currency="jpy"
+            data-amount="{{amount}}"
+            data-alipay="true"
+            data-locale="auto">
+      </script>
+    </form> -->
+    <form action="/charge" class="stripe-form" method="POST">
+      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ stripe_pub_key }}" data-description="{{ company_name }} - {{ rep_name }}"
+        data-amount="{{ amount * 100.00 }}" data-name="TAMUhack" data-image="http://tamuhack.com/logo-02.png" data-locale="auto">
+        </script>
+    </form>
+    {% else %}
+    <p class="heading">Payments</p>
+    <form action="/" method="get">
+      <div class="form-field">
+        <label for="amount">Amount (USD)</label>
+        <input id="amount" name="amount" type="number" placeholder="1000" required>
+      </div>
+      <div class="form-field">
+        <label for="company_name">Company Name</label>
+        <input id="company_name" name="company_name" type="text" placeholder="Facebook" value="{{company_name}}" required>
+      </div>
+      <div class="form-field">
+        <label for="rep_name">Representative Name (your name)</label>
+        <input id="rep_name" name="rep_name" type="text" placeholder="Jane Doe" value="{{rep_name}}" required>
+      </div>
+      <div class="form-field">
+        <button type="submit">Next</button>
+      </div>
+    </form>
+    {% endif %}
+  </div>
+</body>
+
+</html>
